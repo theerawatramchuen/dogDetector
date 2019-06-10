@@ -30,7 +30,8 @@ while(cap.isOpened()):
         x = preprocess_input(x)
         preds = model.predict(x)
         end_t = time.time()
-        print('Predicted:', decode_predictions(preds, top=1)[0],' Time: ',round((end_t-start_t),2))
+        result = decode_predictions(preds, top=1)[0]
+        print('Predicted:', result[0][1],' ',round((result[0][2])*100),'%',' Time(mS): ',round((end_t-start_t)*1000,2))
     
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
@@ -48,41 +49,4 @@ exit()
 
 
 
-
-
-
-start_t = time.time()
-img_path = 'cat.jpg'
-img = image.load_img(img_path, target_size=(224, 224))
-x = image.img_to_array(img)
-x = np.expand_dims(x, axis=0)
-x = preprocess_input(x)
-preds = model.predict(x)
-end_t = time.time()
-# decode the results into a list of tuples (class, description, probability)
-# (one such list for each sample in the batch)
-print('Predicted:', decode_predictions(preds, top=1)[0],' Time: ',round((end_t-start_t),2))
-# Predicted: [(u'n02504013', u'Indian_elephant', 0.82658225), (u'n01871265', u'tusker', 0.1122357), (u'n02504458', u'African_elephant', 0.061040461)]
-
-
-start_t = time.time()
-img_path = 'elephant.jpg'
-img = image.load_img(img_path, target_size=(224, 224))
-x = image.img_to_array(img)
-x = np.expand_dims(x, axis=0)
-x = preprocess_input(x)
-preds = model.predict(x)
-end_t = time.time()
-print('Predicted:', decode_predictions(preds, top=1)[0],' Time: ',round((end_t-start_t),2))
-
-
-start_t = time.time()
-img_path = 'dog.jpg'
-img = image.load_img(img_path, target_size=(224, 224))
-x = image.img_to_array(img)
-x = np.expand_dims(x, axis=0)
-x = preprocess_input(x)
-preds = model.predict(x)
-end_t = time.time()
-print('Predicted:', decode_predictions(preds, top=1)[0],' Time: ',round((end_t-start_t),2))
 
